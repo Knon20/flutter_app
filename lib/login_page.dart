@@ -1,6 +1,7 @@
-import 'package:abraham_flutter_app/increment_and_decrement.dart';
+import 'dart:convert';
+import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
-import 'my_home_page.dart';
+import 'database_helper.dart';
 
 class LoginPage extends StatelessWidget {
   final TextEditingController _usernameController = TextEditingController();
@@ -8,62 +9,58 @@ class LoginPage extends StatelessWidget {
 
   LoginPage({super.key});
 
+  String hashPassword(String password) {
+    final bytes = utf8.encode(password);
+    final digest = sha256.convert(bytes);
+    return digest.toString();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blueGrey[50], // Cambia el color de fondo
+      backgroundColor: Colors.blueGrey[50],
       appBar: AppBar(
         title: const Text('Login'),
-        centerTitle: true, // Centra el texto en la barra de título
-        backgroundColor:
-          Colors.deepPurple, // Cambia el color de la barra de título
+        centerTitle: true,
+        backgroundColor: Colors.deepPurple,
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment
-              .center, // Centra los elementos en el eje principal
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             TextField(
               controller: _usernameController,
               decoration: const InputDecoration(
                 labelText: 'Username',
-                border:
-                    OutlineInputBorder(), // Agrega un borde alrededor del campo de texto
-                filled: true, // Rellena el campo de texto con un color
-                fillColor: Colors.white, // El color de relleno es blanco
+                border: OutlineInputBorder(),
+                filled: true,
+                fillColor: Colors.white,
               ),
             ),
-            const SizedBox(
-                height: 20), // Agrega un espacio entre los campos de texto
+            const SizedBox(height: 20),
             TextField(
               controller: _passwordController,
               decoration: const InputDecoration(
                 labelText: 'Password',
-                border:
-                    OutlineInputBorder(), // Agrega un borde alrededor del campo de texto
-                filled: true, // Rellena el campo de texto con un color
-                fillColor: Colors.white, // El color de relleno es blanco
+                border: OutlineInputBorder(),
+                filled: true,
+                fillColor: Colors.white,
               ),
               obscureText: true,
             ),
-            const SizedBox(
-                height:
-                    20), // Agrega un espacio entre el campo de texto y el botón
+            const SizedBox(height: 20),
             ElevatedButton(
               child: const Text('Login'),
-              onPressed: () {
+              onPressed: () async {
                 final username = _usernameController.text;
-                final password = _passwordController.text;
+                final password = hashPassword(_passwordController.text);
 
-                // Simulate a login process
-                if (username == 'admin' && password == 'admin') {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            const MyHomePage(title: 'Poli-Fitness')),
-                  );
+                // Get the user from the database
+                final user = await DatabaseHelper().getUser(username, password);
+
+                if (user != null) {
+                  Navigator.pushReplacementNamed(context, '/home');
                 } else {
                   // Show error message
                   showDialog(
@@ -84,6 +81,13 @@ class LoginPage extends StatelessWidget {
                     },
                   );
                 }
+              },
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              child: const Text('Register'),
+              onPressed: () {
+                Navigator.pushNamed(context, '/register');
               },
             ),
           ],
