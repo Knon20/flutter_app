@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'database_helper.dart';
 
 class LoginPage extends StatelessWidget {
@@ -60,7 +61,14 @@ class LoginPage extends StatelessWidget {
                 final user = await DatabaseHelper().getUser(username, password);
 
                 if (user != null) {
-                  Navigator.pushReplacementNamed(context, '/home');
+                  SharedPreferences prefs = await SharedPreferences.getInstance();
+                  await prefs.setInt('userId', user['id']);
+
+                  if (username == 'matias') {
+                    Navigator.pushReplacementNamed(context, '/admin');
+                  } else {
+                    Navigator.pushReplacementNamed(context, '/home');
+                  }
                 } else {
                   // Show error message
                   showDialog(

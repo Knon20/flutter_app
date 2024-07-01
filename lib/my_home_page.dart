@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'physical_activity_page.dart';
-import 'sleep_control_page.dart';
-import 'stress_management_page.dart';
+import 'control_your_calories.dart';
+import 'calcule_your_imc.dart';
 import 'food_registry_page.dart';
 import 'login_page.dart';
 
@@ -69,7 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const SleepControlPage()),
+                        MaterialPageRoute(builder: (context) => const ControlYourCaloriesPage()),
                       );
                     },
                   ),
@@ -78,11 +78,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   height: 50, // Ajusta el valor según sea necesario
                   width: 50, // Ajusta el valor según sea necesario
                   child: ElevatedButton(
-                    child: const Text('Gestiona tu peso según tu altura'),
+                    child: const Text('Calcula tu IMC'),
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const StressManagementPage()),
+                        MaterialPageRoute(builder: (context) => const CalculeYourIMCPage()),
                       );
                     },
                   ),

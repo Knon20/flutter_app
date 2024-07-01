@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class FoodRegistryPage extends StatelessWidget {
-  const FoodRegistryPage({super.key});
+class CalculeYourIMCPage extends StatelessWidget {
+  const CalculeYourIMCPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Registro de alimentación'),
+      appBar: AppBar(title: const Text('Calcula tu IMC'),
         titleTextStyle: const TextStyle(
           color: Colors.black,
           fontSize: 18,
