@@ -42,6 +42,7 @@ class DatabaseHelper {
       id INTEGER PRIMARY KEY,
       activity TEXT NOT NULL,
       duration INTEGER NOT NULL,
+      calories INTEGER NOT NULL
       date TEXT NOT NULL,
       user_id INTEGER,
       FOREIGN KEY(user_id) REFERENCES users(id)
@@ -74,6 +75,42 @@ class DatabaseHelper {
       {'name': 'Zanahoria', 'calories': 41},
       {'name': 'Pollo', 'calories': 335},
       {'name': 'Arroz', 'calories': 130},
+      {'name': 'Pescado', 'calories': 206},
+      {'name': 'Lechuga', 'calories': 5},
+      {'name': 'Tomate', 'calories': 18},
+      {'name': 'Papa', 'calories': 130},
+      {'name': 'Carne de res', 'calories': 250},
+      {'name': 'Huevo', 'calories': 68},
+      {'name': 'Queso', 'calories': 402},
+      {'name': 'Pan', 'calories': 265},
+      {'name': 'Leche', 'calories': 42},
+      {'name': 'Yogurt', 'calories': 59},
+      {'name': 'Cereal', 'calories': 110},
+      {'name': 'Avena', 'calories': 68},
+      {'name': 'Miel', 'calories': 64},
+      {'name': 'Mantequilla', 'calories': 102},
+      {'name': 'Jamon', 'calories': 37},
+      {'name': 'Salchicha', 'calories': 301},
+      {'name': 'Tocino', 'calories': 42},
+      {'name': 'Pasta', 'calories': 131},
+      {'name': 'Sopa', 'calories': 65},
+      {'name': 'Ensalada', 'calories': 11},
+      {'name': 'Sandwich', 'calories': 352},
+      {'name': 'Hamburguesa', 'calories': 250},
+      {'name': 'Pizza', 'calories': 285},
+      {'name': 'Hot dog', 'calories': 150},
+      {'name': 'Tacos', 'calories': 156},
+      {'name': 'Nachos', 'calories': 346},
+      {'name': 'Papas fritas', 'calories': 365},
+      {'name': 'Pollo frito', 'calories': 219},
+      {'name': 'Helado', 'calories': 207},
+      {'name': 'Pastel', 'calories': 243},
+      {'name': 'Galletas', 'calories': 150},
+      {'name': 'Chocolate', 'calories': 208},
+      {'name': 'Cafe', 'calories': 2},
+      {'name': 'Te', 'calories': 2},
+      {'name': 'Jugo de naranja', 'calories': 112},
+      {'name': 'Refresco', 'calories': 150},
     ];
 
     for (var food in foods) {
@@ -186,5 +223,19 @@ class DatabaseHelper {
   Future<int> updateFoodRegistry(Map<String, dynamic> foodRegistry) async {
     Database db = await database;
     return await db.update('food_registry', foodRegistry, where: 'id = ?', whereArgs: [foodRegistry['id']]);
+  }
+
+  Future<int?> getFoodCalories(int foodId) async {
+    Database db = await database;
+    List<Map> results = await db.query(
+      'foods',
+      columns: ['calories'],
+      where: 'id = ?',
+      whereArgs: [foodId],
+    );
+    if (results.isNotEmpty) {
+      return results.first['calories'] as int?;
+    }
+    return 0;
   }
 }
