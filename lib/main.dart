@@ -18,6 +18,7 @@ void main() async {
   await printAllUsers();
   await printAllActivities();
   await printAllFoodRegistries();
+  await printAllFoods();
 }
 
 Future<void> deleteDatabase() async {
@@ -54,6 +55,14 @@ Future<void> printAllFoodRegistries() async {
   for (var foodRegistry in foodRegistries) {
     print('Food Registry: ${foodRegistry['food_id']}, Meal: ${foodRegistry['meal']}, '
         'Date: ${foodRegistry['date']} User Id: ${foodRegistry['user_id']} ');
+  }
+}
+
+Future<void> printAllFoods() async {
+  DatabaseHelper dbHelper = DatabaseHelper();
+  List<Map<String, dynamic>> foods = await dbHelper.getAllFoods();
+  for (var food in foods) {
+    print('Food: ${food['name']}, Calories: ${food['calories']} id: ${food['id']} ');
   }
 }
 
