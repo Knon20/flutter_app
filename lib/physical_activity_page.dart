@@ -14,7 +14,7 @@ class _PhysicalActivityPageState extends State<PhysicalActivityPage> {
   final _durationController = TextEditingController();
   final dbHelper = DatabaseHelper();
 
-  final List<String> _activityTypes = ['Correr', 'Nadar', 'Caminar', 'Ciclismo', 'Yoga'];
+  final List<String> _activityTypes = ['Correr', 'Nadar', 'Caminar', 'Ciclismo', 'Saltar cuerda'];
   final _dateController = TextEditingController(
     text: DateTime.now().toString().split(' ')[0], // Esto dará la fecha en formato 'YYYY-MM-DD'
   );
