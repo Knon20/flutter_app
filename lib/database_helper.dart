@@ -42,7 +42,7 @@ class DatabaseHelper {
       id INTEGER PRIMARY KEY,
       activity TEXT NOT NULL,
       duration INTEGER NOT NULL,
-      calories INTEGER NOT NULL
+      calories INTEGER NOT NULL,
       date TEXT NOT NULL,
       user_id INTEGER,
       FOREIGN KEY(user_id) REFERENCES users(id)
@@ -116,6 +116,19 @@ class DatabaseHelper {
     for (var food in foods) {
       await db.insert('foods', food);
     }
+
+
+    await db.execute('''
+    CREATE TABLE IMC (
+      id INTEGER PRIMARY KEY,
+      imc REAL NOT NULL,
+      weight REAL NOT NULL,
+      height REAL NOT NULL,
+      date TEXT NOT NULL,
+      user_id INTEGER,
+      FOREIGN KEY(user_id) REFERENCES users(id)
+    )
+  ''');
   }
 
   Future<int> insertUser(Map<String, dynamic> user) async {
@@ -237,5 +250,28 @@ class DatabaseHelper {
       return results.first['calories'] as int?;
     }
     return 0;
+  }
+
+  Future<int> insertIMC(int userId, Map<String, dynamic> imc) async {
+    Database db = await database;
+    imc['user_id'] = userId; // Añade el id del usuario al mapa
+    return await db.insert('IMC', imc);
+  }
+
+  Future<List<Map<String, dynamic>>> getAllIMC() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int userId = prefs.getInt('userId') ?? 0;
+    Database db = await database;
+    return await db.query('IMC', where: 'user_id = ?', whereArgs: [userId]);
+  }
+
+  Future<int> deleteIMC(int id) async {
+    Database db = await database;
+    return await db.delete('IMC', where: 'id = ?', whereArgs: [id]);
+  }
+
+  Future<int> updateIMC(Map<String, dynamic> imc) async {
+    Database db = await database;
+    return await db.update('IMC', imc, where: 'id = ?', whereArgs: [imc['id']]);
   }
 }

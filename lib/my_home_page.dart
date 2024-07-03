@@ -65,7 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   height: 50, // Ajusta el valor según sea necesario
                   width: 50, // Ajusta el valor según sea necesario
                   child: ElevatedButton(
-                    child: const Text('Controla tus calorias'),
+                    child: const Text('Controla tus calorías'),
                     onPressed: () {
                       Navigator.push(
                         context,
