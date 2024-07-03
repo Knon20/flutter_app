@@ -95,8 +95,8 @@ class _CalculeYourIMCPageState extends State<CalculeYourIMCPage> {
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          title: Text('Tu IMC es: $imcParsed \n '
-                              'tu estado de salud es: $healthStatus '),
+                          title: Text('Tu IMC es: $imcParsed \n'
+                              'Tu estado de salud es: $healthStatus '),
                           actions: <Widget>[
                             TextButton(
                               onPressed: () {

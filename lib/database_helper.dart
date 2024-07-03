@@ -42,7 +42,7 @@ class DatabaseHelper {
       id INTEGER PRIMARY KEY,
       activity TEXT NOT NULL,
       duration INTEGER NOT NULL,
-      calories INTEGER NOT NULL,
+      calories INTEGER,
       date TEXT NOT NULL,
       user_id INTEGER,
       FOREIGN KEY(user_id) REFERENCES users(id)
