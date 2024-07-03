@@ -62,14 +62,14 @@ class _ControlYourCaloriesPageState extends State<ControlYourCaloriesPage> {
             future: dbHelper.getAllFoodRegistries(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                // Crear una lista para almacenar todas las Futures
+
                 List<Future<int?>> foodCaloriesFutures = [];
                 for (var foodRegistry in snapshot.data!) {
                   int foodId = foodRegistry['food_id'] as int? ?? 0;
                   // Añadir cada Future a la lista
                   foodCaloriesFutures.add(dbHelper.getFoodCalories(foodId));
                 }
-                // Esperar a que todas las Futures se completen
+
                 return FutureBuilder(
                   future: Future.wait(foodCaloriesFutures),
                   builder: (context, AsyncSnapshot<List<int?>> snapshot) {
